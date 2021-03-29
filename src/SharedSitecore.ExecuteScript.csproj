@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net471</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>0.0.1</Version>
+		<PackageId>SharedSitecore.ExecuteScript</PackageId>
+		<Description>Sitecore Helper that ExecutesScript inline or from SPE ScriptLibrary</Description>
+		<Copyright>Copyright ©  2020</Copyright>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageProjectUrl>https://github.com/SitecoreDave/SharedSitecore.ExecuteScript</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/SitecoreDave/SharedSitecore.ExecuteScript</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>sitecore powershell extension execute script</PackageTags>
+		<Company>Sitecore Dave, Radical Dave, David Walker</Company>
+		<Authors>Sitecore Dave, Radical Dave, David Walker</Authors>
+		<PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Sitecore.Kernel" Version="9.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Spe">
+	    <HintPath>..\ref\Spe.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="IF &quot;$(ConfigurationName)&quot; == &quot;Debug&quot; (Powershell.exe -ExecutionPolicy Unrestricted -file D:\repos\SharedSitecore\SharedSitecore.DeploySitecoreProject\Deploy-SitecoreProject.ps1 $(ProjectDir))" />
+	</Target>
+
+</Project>
